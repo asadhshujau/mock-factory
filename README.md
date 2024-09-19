@@ -1,4 +1,4 @@
-# mock-factory
+# shujau-mock-factory
 
 A flexible and powerful fake data generator built on top of Faker.js.
 
@@ -6,18 +6,18 @@ A flexible and powerful fake data generator built on top of Faker.js.
 
 Using npm:
 ```bash
-npm install mock-factory
+npm install shujau-mock-factory
 ```
 
 Using yarn:
 ```bash
-yarn add mock-factory
+yarn add shujau-mock-factory
 ```
 
 ## Usage
 
 ```javascript
-import factory from 'mock-factory';
+import factory from 'shujau-mock-factory';
 
 // Generate fake data
 const users = factory({
@@ -137,7 +137,7 @@ npm run test:watch
 yarn test:watch
 ```
 
-The test suite covers various aspects of the mock-factory, including:
+The test suite covers various aspects of the shujau-mock-factory, including:
 - Simple array schemas
 - Object schemas with explicit types
 - Nested objects
