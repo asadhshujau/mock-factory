@@ -1,4 +1,4 @@
-# faker-factory
+# mock-factory
 
 A flexible and powerful fake data generator built on top of Faker.js.
 
@@ -6,18 +6,18 @@ A flexible and powerful fake data generator built on top of Faker.js.
 
 Using npm:
 ```bash
-npm install faker-factory
+npm install mock-factory
 ```
 
 Using yarn:
 ```bash
-yarn add faker-factory
+yarn add mock-factory
 ```
 
 ## Usage
 
 ```javascript
-import factory from 'faker-factory';
+import factory from 'mock-factory';
 
 // Generate fake data
 const users = factory({
@@ -102,6 +102,50 @@ Returns an array of generated objects based on the schema.
 - Date/Time: past, future, recent, month, weekday
 - Identifiers: uuid
 - Miscellaneous: color
+
+## Testing
+
+This package uses Jest for testing. To run the tests:
+
+#### Install dependencies:
+
+```bash
+npm install
+```
+**or**
+```bash
+yarn
+```
+
+#### Run tests:
+
+```bash
+npm test
+```
+**or**
+```bash
+yarn test
+```
+
+#### To run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+**or**
+```bash
+yarn test:watch
+```
+
+The test suite covers various aspects of the mock-factory, including:
+- Simple array schemas
+- Object schemas with explicit types
+- Nested objects
+- Array generation
+- Custom generator functions
+- Multiple object generation
+
+If you're contributing to this project, please ensure that your changes are covered by tests.
 
 ## License
 
