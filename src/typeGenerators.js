@@ -1,15 +1,30 @@
 import { faker } from '@faker-js/faker'
 
+let uniqueIntCounter = 0
+
+const getUniqueInt = () => {
+  return ++uniqueIntCounter
+}
+
+export const resetUniqueIntCounter = () => {
+  uniqueIntCounter = 0
+}
+
+export const setUniqueIntStart = (startValue) => {
+  uniqueIntCounter = startValue
+}
+
 /**
  * Object containing generator functions for various data types.
  * Each function generates a fake value of the specified type.
  *
  * @type {Object.<string, function(*=): *>}
  */
-const typeGenerators = {
+export const typeGenerators = {
   // Basic types
   string: () => faker.lorem.word(),
-  id: () => faker.number.int({ min: 1, max: 1000 }),
+  id: () => getUniqueInt(),
+  uniqueInt: () => getUniqueInt(),
   number: () => faker.number.int({ min: 1, max: 1000 }),
   boolean: () => faker.datatype.boolean(),
 

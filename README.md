@@ -16,18 +16,37 @@ yarn add shujau-mock-factory
 
 ## Usage
 
+Basic usage:
+
 ```javascript
 import factory from 'shujau-mock-factory';
 
 // Generate fake data
 const users = factory({
-  id: 'uuid',
+  id: 'uniqueInt',
   name: 'fullName',
   email: 'email',
   age: { type: 'number', options: { min: 18, max: 65 } }
 }, 2);
 
 console.log(users);
+```
+
+Advanced usage:
+```javascript
+import { factory, typeGenerators, resetUniqueIntCounter, setUniqueIntStart } from 'faker-factory';
+
+// start uniqueInt count from 10
+setUniqueIntStart(10)
+
+// Use factory as before
+const users = factory({ ... }, 2);
+
+// Reset unique integer counter
+resetUniqueIntCounter();
+
+// Access type generators directly
+const randomName = typeGenerators.fullName();
 ```
 
 ## Features
@@ -56,7 +75,7 @@ const schema = {
 ### Complex Object
 ```javascript
 const schema = {
-  id: 'uuid',
+  id: 'uniqueInt',
   name: 'fullName',
   email: 'email',
   age: { type: 'number', options: { min: 18, max: 65 } },
@@ -112,7 +131,9 @@ This package uses Jest for testing. To run the tests:
 ```bash
 npm install
 ```
-**or**
+
+or
+
 ```bash
 yarn
 ```
@@ -122,7 +143,9 @@ yarn
 ```bash
 npm test
 ```
-**or**
+
+or
+
 ```bash
 yarn test
 ```

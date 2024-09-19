@@ -1,4 +1,4 @@
-import factory from '../index.js'
+import factory, { resetUniqueIntCounter } from '../src/index.js'
 
 describe('mock-factory', () => {
     test('generates data based on simple array schema', () => {
@@ -85,6 +85,33 @@ describe('mock-factory', () => {
         result.forEach(item => {
             expect(item).toHaveProperty('id')
             expect(item).toHaveProperty('name')
+        })
+    })
+
+    describe('uniqueInt generator', () => {
+        beforeEach(() => {
+            resetUniqueIntCounter()
+        })
+
+        test('generates unique incrementing integers', () => {
+            const schema = { id: 'uniqueInt' }
+            const result = factory(schema, 3)
+
+            expect(result).toHaveLength(3)
+            expect(result[0].id).toBe(1)
+            expect(result[1].id).toBe(2)
+            expect(result[2].id).toBe(3)
+        })
+
+        test('continues incrementing across multiple factory calls', () => {
+            const schema = { id: 'uniqueInt' }
+            const result1 = factory(schema, 2)
+            const result2 = factory(schema, 2)
+
+            expect(result1[0].id).toBe(1)
+            expect(result1[1].id).toBe(2)
+            expect(result2[0].id).toBe(3)
+            expect(result2[1].id).toBe(4)
         })
     })
 })

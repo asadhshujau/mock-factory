@@ -19,7 +19,7 @@ const createGenerator = (type, options) => {
  * @param {Array|Object} schema - The schema to normalize.
  * @returns {Object} The normalized schema.
  */
-const normalizeSchema = (schema) => {
+export const normalizeSchema = (schema) => {
     if (Array.isArray(schema)) {
         return Object.fromEntries(schema.map(key => [key, { type: key }]))
     }
@@ -116,7 +116,7 @@ const generateValue = (field, cache) => {
  *   customField: () => 'Custom Value'
  * }, 2);
  */
-const factory = (schema, quantity = 1, cache = {}) => {
+export const factory = (schema, quantity = 1, cache = {}) => {
     const normalizedSchema = normalizeSchema(schema)
 
     return Array.from({ length: quantity }, () =>
