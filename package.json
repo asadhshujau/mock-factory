@@ -18,9 +18,12 @@
   },
   "keywords": [
     "faker",
+    "mock",
+    "mockery",
     "factory",
     "testing",
     "development",
+    "prototyping",
     "data"
   ],
   "author": "Asadh Shujau",
