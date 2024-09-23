@@ -1,3 +1,5 @@
+![CI](https://github.com/asadhshujau/mock-factory/workflows/CI/badge.svg)
+
 # shujau-mock-factory
 
 A flexible and powerful fake data generator built on top of Faker.js.
