@@ -1,4 +1,4 @@
-import factory, { resetUniqueIntCounter } from '../src/index.js'
+import factory, { resetUniqueIntCounter, setSeed } from '../src/index.js'
 
 describe('mock-factory', () => {
     test('generates data based on simple array schema', () => {
@@ -114,4 +114,43 @@ describe('mock-factory', () => {
             expect(result2[1].id).toBe(4)
         })
     })
+
+    describe('seeding', () => {
+        beforeEach(() => {
+            resetUniqueIntCounter()
+        })
+
+        test('generates consistent data with the same seed', () => {
+            const schema = {
+                id: 'uniqueInt',
+                name: 'fullName',
+                email: 'email'
+            }
+
+            setSeed(123)
+            const result1 = factory(schema, 2)
+
+            setSeed(123)
+            const result2 = factory(schema, 2)
+
+            expect(result1).toEqual(result2)
+        })
+
+        test('generates different data with different seeds', () => {
+            const schema = {
+                id: 'uniqueInt',
+                name: 'fullName',
+                email: 'email'
+            }
+
+            setSeed(123)
+            const result1 = factory(schema, 1)
+
+            setSeed(456)
+            const result2 = factory(schema, 1)
+
+            expect(result1).not.toEqual(result2)
+        })
+    })
+
 })

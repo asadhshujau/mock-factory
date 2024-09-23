@@ -55,6 +55,7 @@ const randomName = typeGenerators.fullName();
 - Supports nested objects and arrays
 - Custom generator functions
 - Built on Faker.js for a wide range of data types
+- Set a seed to generate consistent data across multiple runs
 
 ## Schema Definition
 
@@ -121,6 +122,27 @@ Returns an array of generated objects based on the schema.
 - Date/Time: past, future, recent, month, weekday
 - Identifiers: uuid
 - Miscellaneous: color
+
+## Seeding
+
+You can now set a seed to generate consistent data across multiple runs:
+
+```javascript
+import { factory, setSeed } from 'shujau-mock-factory';
+
+// Set a seed
+setSeed(123);
+
+// Generate data
+const users = factory({
+  id: 'uniqueInt',
+  name: 'fullName',
+  email: 'email'
+}, 2);
+
+// This will generate the same data every time with the same seed
+console.log(users);
+```
 
 ## Testing
 

@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker'
+import { faker } from "@faker-js/faker"
 
 let uniqueIntCounter = 0
 
@@ -12,6 +12,11 @@ export const resetUniqueIntCounter = () => {
 
 export const setUniqueIntStart = (startValue) => {
   uniqueIntCounter = startValue
+}
+
+export const setSeed = (seed) => {
+  faker.seed(seed)
+  resetUniqueIntCounter()
 }
 
 /**
@@ -89,7 +94,7 @@ export const typeGenerators = {
   color: () => faker.color.human(),
 
   // Fallback for unsupported types
-  default: () => faker.lorem.word()
+  default: () => faker.lorem.word(),
 }
 
 export default typeGenerators
