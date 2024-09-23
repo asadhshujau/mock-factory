@@ -4,6 +4,9 @@
   "description": "A flexible fake data generator based on Faker.js",
   "main": "src/index.js",
   "type": "module",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/asadhshujau/mock-factory.git"
