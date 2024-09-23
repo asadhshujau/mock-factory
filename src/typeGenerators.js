@@ -97,4 +97,11 @@ export const typeGenerators = {
   default: () => faker.lorem.word(),
 }
 
+export const defineType = (name, generator) => {
+  if (typeof generator !== 'function') {
+    throw new Error('Generator must be a function')
+  }
+  typeGenerators[name] = generator
+}
+
 export default typeGenerators

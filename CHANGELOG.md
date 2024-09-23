@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2023-11-XX
+
+### Added
+- Custom type definitions feature
+- New `defineType(name, generator)` function to create custom types
+- Tests for custom type definitions
+- Documentation for using custom type definitions
+
 ## [1.2.0] - 2023-11-15
 
 ### Added

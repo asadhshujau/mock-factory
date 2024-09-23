@@ -1,4 +1,4 @@
-import factory, { resetUniqueIntCounter, setSeed } from '../src/index.js'
+import factory, { defineType, resetUniqueIntCounter, setSeed } from '../src/index.js'
 
 describe('mock-factory', () => {
     test('generates data based on simple array schema', () => {
@@ -150,6 +150,36 @@ describe('mock-factory', () => {
             const result2 = factory(schema, 1)
 
             expect(result1).not.toEqual(result2)
+        })
+    })
+
+    describe('custom type definitions', () => {
+        beforeEach(() => {
+            resetUniqueIntCounter()
+        })
+
+        test('allows defining and using custom types', () => {
+            defineType('customEmail', () => `user_${Math.random().toString(36).substr(2, 5)}@example.com`)
+
+            const schema = {
+                id: 'uniqueInt',
+                email: 'customEmail'
+            }
+
+            const result = factory(schema, 2)
+
+            expect(result).toHaveLength(2)
+            expect(result[0]).toHaveProperty('id')
+            expect(result[0]).toHaveProperty('email')
+            expect(result[0].email).toMatch(/^user_[a-z0-9]{5}@example\.com$/)
+            expect(result[1].email).toMatch(/^user_[a-z0-9]{5}@example\.com$/)
+            expect(result[0].email).not.toBe(result[1].email)
+        })
+
+        test('throws an error when defining a custom type with a non-function generator', () => {
+            expect(() => {
+                defineType('invalidType', 'not a function')
+            }).toThrow('Generator must be a function')
         })
     })
 

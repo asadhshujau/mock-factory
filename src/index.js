@@ -1,4 +1,4 @@
-import factory, { normalizeSchema, setSeed } from './factory.js'
+import factory, { normalizeSchema, setSeed, defineType } from './factory.js'
 import typeGenerators, { resetUniqueIntCounter, setUniqueIntStart } from './typeGenerators.js'
 
 export {
@@ -7,7 +7,8 @@ export {
     typeGenerators,
     resetUniqueIntCounter,
     setUniqueIntStart,
-    setSeed
+    setSeed,
+    defineType
 }
 
 export default factory

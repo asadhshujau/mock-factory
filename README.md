@@ -58,6 +58,7 @@ const randomName = typeGenerators.fullName();
 - Custom generator functions
 - Built on Faker.js for a wide range of data types
 - Set a seed to generate consistent data across multiple runs
+- Custom type definitions
 
 ## Schema Definition
 
@@ -145,6 +146,28 @@ const users = factory({
 // This will generate the same data every time with the same seed
 console.log(users);
 ```
+
+## Custom Type Definitions
+
+You can now define your own custom types using the `defineType` function:
+
+```javascript
+import { factory, defineType } from 'shujau-mock-factory';
+
+// Define a custom type
+defineType('customEmail', () => `user_${Math.random().toString(36).substr(2, 5)}@example.com`);
+
+// Use the custom type in a schema
+const users = factory({
+  id: 'uniqueInt',
+  email: 'customEmail',
+  name: 'fullName'
+}, 2);
+
+console.log(users);
+```
+
+This allows you to create types specific to your use case or domain, enhancing the flexibility of the mock factory.
 
 ## Testing
 

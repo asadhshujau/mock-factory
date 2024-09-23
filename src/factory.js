@@ -1,4 +1,4 @@
-import typeGenerators, { setSeed } from './typeGenerators.js'
+import typeGenerators, { setSeed, defineType } from './typeGenerators.js'
 
 /**
  * Creates a generator function for the given type and options.
@@ -129,6 +129,6 @@ export const factory = (schema, quantity = 1, cache = {}) => {
     )
 }
 
-export { setSeed }
+export { setSeed, defineType }
 
 export default factory
