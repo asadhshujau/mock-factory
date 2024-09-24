@@ -197,6 +197,23 @@ console.log(mockData);
 
 The `factoryFromSample` function will infer the schema from the sample data and generate appropriate mock data. It supports nested object structures, allowing you to create complex mock data easily.
 
+Example with dates:
+
+```javascript
+import { factoryFromSample } from 'shujau-mock-factory';
+
+const sampleData = {
+  id: 1,
+  name: "John Doe",
+  birthDate: "1990-01-01",
+  createdAt: "2023-01-01T12:00:00Z",
+  lastLogin: new Date()
+};
+
+const mockData = factoryFromSample(sampleData, 3);
+console.log(mockData);
+```
+
 ## Testing
 
 This package uses Jest for testing. To run the tests:

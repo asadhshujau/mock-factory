@@ -81,6 +81,11 @@ export const typeGenerators = {
   word: () => faker.lorem.word(),
 
   // Date and time
+  dob: () => faker.date.past(),
+  date_of_birth: () => faker.date.past(),
+  birth_date: () => faker.date.past(),
+  date: () => faker.date.past(),
+  datetime: () => faker.date.past(),
   past: () => faker.date.past(),
   future: () => faker.date.future(),
   recent: () => faker.date.recent(),

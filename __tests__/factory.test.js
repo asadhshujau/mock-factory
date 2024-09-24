@@ -220,20 +220,45 @@ describe('mock-factory', () => {
                     name: "John Doe",
                     email: "john@example.com"
                 }
-            };
+            }
 
-            const result = factoryFromSample(sampleData, 1);
+            const result = factoryFromSample(sampleData, 1)
 
-            expect(result).toHaveLength(1);
-            expect(result[0]).toHaveProperty('id');
-            expect(typeof result[0].id).toBe('number');
-            expect(result[0]).toHaveProperty('user');
-            expect(typeof result[0].user).toBe('object');
-            expect(result[0].user).toHaveProperty('name');
-            expect(typeof result[0].user.name).toBe('string');
-            expect(result[0].user).toHaveProperty('email');
-            expect(result[0].user.email).toMatch(/@/);
+            expect(result).toHaveLength(1)
+            expect(result[0]).toHaveProperty('id')
+            expect(typeof result[0].id).toBe('number')
+            expect(result[0]).toHaveProperty('user')
+            expect(typeof result[0].user).toBe('object')
+            expect(result[0].user).toHaveProperty('name')
+            expect(typeof result[0].user.name).toBe('string')
+            expect(result[0].user).toHaveProperty('email')
+            expect(result[0].user.email).toMatch(/@/)
         })
+
+        test('infers date types', () => {
+            const sampleData = {
+                id: 1,
+                name: "John Doe",
+                birthDate: "1990-01-01",
+                createdAt: "2023-01-01T12:00:00Z",
+                lastLogin: new Date()
+            }
+
+            const result = factoryFromSample(sampleData, 1)
+
+            expect(result).toHaveLength(1)
+            expect(result[0]).toHaveProperty('id')
+            expect(typeof result[0].id).toBe('number')
+            expect(result[0]).toHaveProperty('name')
+            expect(typeof result[0].name).toBe('string')
+            expect(result[0]).toHaveProperty('birthDate')
+            expect(result[0].birthDate instanceof Date).toBe(true)
+            expect(result[0]).toHaveProperty('createdAt')
+            expect(result[0].createdAt instanceof Date).toBe(true)
+            expect(result[0]).toHaveProperty('lastLogin')
+            expect(result[0].lastLogin instanceof Date).toBe(true)
+        })
+
     })
 
 })
