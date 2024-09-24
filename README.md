@@ -242,6 +242,8 @@ The test suite covers various aspects of the shujau-mock-factory, including:
 - Array generation
 - Custom generator functions
 - Multiple object generation
+- Custom type definitions
+- Schema Inference
 
 If you're contributing to this project, please ensure that your changes are covered by tests.
 
