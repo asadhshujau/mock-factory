@@ -36,7 +36,7 @@ console.log(users);
 
 Advanced usage:
 ```javascript
-import { factory, typeGenerators, resetUniqueIntCounter, setUniqueIntStart } from 'faker-factory';
+import { factory, typeGenerators, resetUniqueIntCounter, setUniqueIntStart } from 'shujau-mock-factory';
 
 // start uniqueInt count from 10
 setUniqueIntStart(10)
