@@ -1,3 +1,8 @@
+/**
+ * @module typeGenerators
+ * @description Provides generator functions for various data types
+ */
+
 import { faker } from "@faker-js/faker"
 
 let uniqueIntCounter = 0
@@ -20,9 +25,7 @@ export const setSeed = (seed) => {
 }
 
 /**
- * Object containing generator functions for various data types.
- * Each function generates a fake value of the specified type.
- *
+ * Object containing generator functions for various data types
  * @type {Object.<string, function(*=): *>}
  */
 export const typeGenerators = {
@@ -102,6 +105,12 @@ export const typeGenerators = {
   default: () => faker.lorem.word(),
 }
 
+/**
+ * Defines a new custom type generator
+ * @param {string} name - The name of the new type
+ * @param {Function} generator - The generator function for the new type
+ * @throws {Error} If the generator is not a function
+ */
 export const defineType = (name, generator) => {
   if (typeof generator !== 'function') {
     throw new Error('Generator must be a function')

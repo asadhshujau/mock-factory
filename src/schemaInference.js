@@ -1,7 +1,23 @@
+/**
+ * @module schemaInference
+ * @description Provides functionality to infer schema from sample data
+ */
+
 import typeGenerators from './typeGenerators.js'
 
+/**
+ * Checks if a given value is a valid Date object
+ * @param {*} date - The value to check
+ * @returns {boolean} True if the value is a valid Date, false otherwise
+ */
 const isValidDate = (date) => date instanceof Date && !isNaN(date);
 
+/**
+ * Infers the type of a given value
+ * @param {string} key - The key associated with the value
+ * @param {*} value - The value to infer the type from
+ * @returns {string|Object} The inferred type or a nested schema object
+ */
 const inferType = (key, value) => {
   // Check if the key matches a known type
   if (typeGenerators[key]) {
@@ -30,6 +46,11 @@ const inferType = (key, value) => {
   return 'string'; // default fallback
 }
 
+/**
+ * Infers a schema from sample data
+ * @param {Object} sampleData - The sample data to infer the schema from
+ * @returns {Object} The inferred schema
+ */
 export const inferSchema = (sampleData) => {
     const schema = {}
     for (const [key, value] of Object.entries(sampleData)) {

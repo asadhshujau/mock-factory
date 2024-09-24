@@ -1,12 +1,16 @@
+/**
+ * @module factory
+ * @description Provides factory functions for generating mock data
+ */
+
 import { inferSchema } from './schemaInference.js'
-import typeGenerators, { setSeed, defineType } from './typeGenerators.js'
+import typeGenerators, { defineType, setSeed } from './typeGenerators.js'
 
 /**
- * Creates a generator function for the given type and options.
- *
- * @param {string|function} type - The type of data to generate or a custom generator function.
- * @param {Object} [options] - Options to pass to the generator.
- * @returns {function(): *} A generator function.
+ * Creates a generator function for the given type and options
+ * @param {string|Function} type - The type of data to generate or a custom generator function
+ * @param {Object} [options] - Options to pass to the generator
+ * @returns {Function} A generator function
  */
 const createGenerator = (type, options) => {
     if (typeof type === 'function') return type
@@ -15,10 +19,9 @@ const createGenerator = (type, options) => {
 }
 
 /**
- * Normalizes the schema to a consistent format.
- *
- * @param {Array|Object} schema - The schema to normalize.
- * @returns {Object} The normalized schema.
+ * Normalizes the schema to a consistent format
+ * @param {Array|Object} schema - The schema to normalize
+ * @returns {Object} The normalized schema
  */
 export const normalizeSchema = (schema) => {
     if (Array.isArray(schema)) {
@@ -41,11 +44,10 @@ export const normalizeSchema = (schema) => {
 }
 
 /**
- * Generates a value based on the field definition.
- *
- * @param {Object} field - The field definition.
- * @param {Object} cache - Cache of generator functions.
- * @returns {*} The generated value.
+ * Generates a value based on the field definition
+ * @param {Object} field - The field definition
+ * @param {Object} cache - Cache of generator functions
+ * @returns {*} The generated value
  */
 const generateValue = (field, cache) => {
     if (Array.isArray(field.type)) {
@@ -63,59 +65,11 @@ const generateValue = (field, cache) => {
 }
 
 /**
- * Generates fake data based on the provided schema.
- *
- * @param {Array|Object} schema - The schema defining the structure of the data to generate.
- *   Can be:
- *   - An array of field names
- *   - An object with field names and types
- *   - An object with nested structures and options
- * @param {number} [quantity=1] - The number of data objects to generate.
- * @param {Object} [cache={}] - Cache of generator functions (usually for internal use).
- * @returns {Array<Object>} An array of generated data objects.
- *
- * @example
- * // 1. Simple array of field names
- * const simpleUsers = factory(['id', 'name', 'email'], 2);
- *
- * // 2. Object with field names as keys and types as values
- * const typedUsers = factory({
- *   id: 'uuid',
- *   name: 'fullName',
- *   email: 'email',
- *   isActive: 'boolean'
- * }, 2);
- *
- * // 3. Object with true for fields that match their type name
- * const simpleTypedUsers = factory({
- *   id: true, // Will use 'id' type
- *   name: true, // Will use 'name' type
- *   email: true // Will use 'email' type
- * }, 2);
- *
- * // 4. Complex object with nested structures and options
- * const complexUsers = factory({
- *   id: 'uuid',
- *   name: 'fullName',
- *   email: 'email',
- *   age: { type: 'number', options: { min: 18, max: 65 } },
- *   address: {
- *     type: {
- *       street: 'street',
- *       city: 'city',
- *       country: 'country'
- *     }
- *   },
- *   tags: { type: ['word'], length: 3 },
- *   createdAt: 'past'
- * }, 2);
- *
- * // 5. Using custom generator functions
- * const customUsers = factory({
- *   id: 'uuid',
- *   name: 'fullName',
- *   customField: () => 'Custom Value'
- * }, 2);
+ * Generates fake data based on the provided schema
+ * @param {Array|Object} schema - The schema defining the structure of the data to generate
+ * @param {number} [quantity=1] - The number of data objects to generate
+ * @param {Object} [cache={}] - Cache of generator functions (usually for internal use)
+ * @returns {Array<Object>} An array of generated data objects
  */
 export const factory = (schema, quantity = 1, cache = {}) => {
     const normalizedSchema = normalizeSchema(schema)
@@ -130,11 +84,18 @@ export const factory = (schema, quantity = 1, cache = {}) => {
     )
 }
 
+/**
+ * Generates fake data based on a sample data object
+ * @param {Object} sampleData - A sample data object to infer the schema from
+ * @param {number} [quantity=1] - The number of data objects to generate
+ * @param {Object} [cache={}] - Cache of generator functions (usually for internal use)
+ * @returns {Array<Object>} An array of generated data objects
+ */
 export const factoryFromSample = (sampleData, quantity = 1, cache = {}) => {
     const schema = inferSchema(sampleData)
     return factory(schema, quantity, cache)
 }
 
-export { setSeed, defineType }
+export { defineType, setSeed }
 
 export default factory

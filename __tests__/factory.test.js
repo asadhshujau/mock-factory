@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import factory, { defineType, factoryFromSample, resetUniqueIntCounter, setSeed } from '../src/index.js'
 
 describe('mock-factory', () => {
