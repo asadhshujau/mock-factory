@@ -1,6 +1,6 @@
 {
   "name": "shujau-mock-factory",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "A flexible fake data generator based on Faker.js",
   "main": "src/index.js",
   "type": "module",
@@ -9,12 +9,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/asadhshujau/mock-factory.git"
+    "url": "git+https://github.com/asadhshujau/mock-factory.git"
   },
   "files": [
     "src/index.js",
     "src/factory.js",
     "src/typeGenerators.js",
+    "src/schemaInference.js",
     "README.md",
     "CHANGELOG.md",
     "LICENSE"

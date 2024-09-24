@@ -1,3 +1,4 @@
+import { inferSchema } from './schemaInference.js'
 import typeGenerators, { setSeed, defineType } from './typeGenerators.js'
 
 /**
@@ -127,6 +128,11 @@ export const factory = (schema, quantity = 1, cache = {}) => {
             ])
         )
     )
+}
+
+export const factoryFromSample = (sampleData, quantity = 1, cache = {}) => {
+    const schema = inferSchema(sampleData)
+    return factory(schema, quantity, cache)
 }
 
 export { setSeed, defineType }

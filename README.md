@@ -59,6 +59,7 @@ const randomName = typeGenerators.fullName();
 - Built on Faker.js for a wide range of data types
 - Set a seed to generate consistent data across multiple runs
 - Custom type definitions
+- Schema inference
 
 ## Schema Definition
 
@@ -168,6 +169,33 @@ console.log(users);
 ```
 
 This allows you to create types specific to your use case or domain, enhancing the flexibility of the mock factory.
+
+## Schema Inference
+
+You can now generate mock data based on a sample of your actual data structure using the `factoryFromSample` function:
+
+```javascript
+import { factoryFromSample } from 'shujau-mock-factory';
+
+const sampleData = {
+  id: 1,
+  name: "John Doe",
+  email: "john@example.com",
+  age: 30,
+  isActive: true,
+  tags: ["user", "customer"],
+  address: {
+    street: "123 Main St",
+    city: "Anytown",
+    zipCode: "12345"
+  }
+};
+
+const mockData = factoryFromSample(sampleData, 3);
+console.log(mockData);
+```
+
+The `factoryFromSample` function will infer the schema from the sample data and generate appropriate mock data. It supports nested object structures, allowing you to create complex mock data easily.
 
 ## Testing
 

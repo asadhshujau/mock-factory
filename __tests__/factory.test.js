@@ -1,4 +1,4 @@
-import factory, { defineType, resetUniqueIntCounter, setSeed } from '../src/index.js'
+import factory, { defineType, factoryFromSample, resetUniqueIntCounter, setSeed } from '../src/index.js'
 
 describe('mock-factory', () => {
     test('generates data based on simple array schema', () => {
@@ -180,6 +180,59 @@ describe('mock-factory', () => {
             expect(() => {
                 defineType('invalidType', 'not a function')
             }).toThrow('Generator must be a function')
+        })
+    })
+
+    describe('schema inference', () => {
+        test('infers schema from sample data', () => {
+            const sampleData = {
+                id: 1,
+                name: "John Doe",
+                email: "john@example.com",
+                age: 30,
+                isActive: true,
+                tags: ["user", "customer"]
+            }
+
+            const result = factoryFromSample(sampleData, 2)
+
+            expect(result).toHaveLength(2)
+            result.forEach(item => {
+                expect(item).toHaveProperty('id')
+                expect(typeof item.id).toBe('number')
+                expect(item).toHaveProperty('name')
+                expect(typeof item.name).toBe('string')
+                expect(item).toHaveProperty('email')
+                expect(item.email).toMatch(/@/)
+                expect(item).toHaveProperty('age')
+                expect(typeof item.age).toBe('number')
+                expect(item).toHaveProperty('isActive')
+                expect(typeof item.isActive).toBe('boolean')
+                expect(item).toHaveProperty('tags')
+                expect(Array.isArray(item.tags)).toBe(true)
+            })
+        })
+
+        test('infers nested object schema', () => {
+            const sampleData = {
+                id: 1,
+                user: {
+                    name: "John Doe",
+                    email: "john@example.com"
+                }
+            };
+
+            const result = factoryFromSample(sampleData, 1);
+
+            expect(result).toHaveLength(1);
+            expect(result[0]).toHaveProperty('id');
+            expect(typeof result[0].id).toBe('number');
+            expect(result[0]).toHaveProperty('user');
+            expect(typeof result[0].user).toBe('object');
+            expect(result[0].user).toHaveProperty('name');
+            expect(typeof result[0].user.name).toBe('string');
+            expect(result[0].user).toHaveProperty('email');
+            expect(result[0].user.email).toMatch(/@/);
         })
     })
 

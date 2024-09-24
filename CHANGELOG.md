@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2023-11-XX
+
+### Added
+- Schema inference feature
+- New `factoryFromSample` function to generate mock data from sample data
+- New `inferSchema` function to automatically generate schema from sample data
+- Support for nested object structures in schema inference
+- Tests for schema inference feature, including nested objects
+- Documentation for using schema inference
+
 ## [1.3.0] - 2023-11-XX
 
 ### Added
