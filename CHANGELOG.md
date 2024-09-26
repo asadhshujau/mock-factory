@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2024-09-24
+
+### Changed
+- Refactored `factory` function to use an options object for additional parameters.
+- Added `isSample` option to explicitly indicate when input should be treated as a sample.
+- Consolidated `factory` and `factoryFromSample` into a single `factory` function.
+- Maintained backwards compatibility with previous API by supporting a number as the second argument for quantity.
+
+### Deprecated
+- `factoryFromSample` function. Use `factory` with `isSample: true` instead.
+
 ## [1.4.1] - 2024-09-23
 
 ### Added

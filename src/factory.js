@@ -66,12 +66,41 @@ const generateValue = (field, cache) => {
 
 /**
  * Generates fake data based on the provided schema
- * @param {Array|Object} schema - The schema defining the structure of the data to generate
+ * @param {Array|Object} schemaOrSample - The schema defining the structure of the data to generate
  * @param {number} [quantity=1] - The number of data objects to generate
  * @param {Object} [cache={}] - Cache of generator functions (usually for internal use)
  * @returns {Array<Object>} An array of generated data objects
  */
-export const factory = (schema, quantity = 1, cache = {}) => {
+export const factory = (schemaOrSample, options = {}) => {
+    // Check if options is a number and convert to object if so
+    if (typeof options === 'number') {
+        return factory(schemaOrSample, { quantity: options })
+    }
+
+    const {
+        quantity = 1,
+        cache = {},
+        seed,
+        isSample = false
+    } = options
+
+    if (seed !== undefined) {
+        setSeed(seed)
+    }
+
+    let schema
+    if (isSample) {
+        schema = inferSchema(schemaOrSample)
+    } else if (typeof schemaOrSample === 'object' && !Array.isArray(schemaOrSample)) {
+        // Check if it's an explicit schema or if we need to infer
+        const isExplicitSchema = Object.values(schemaOrSample).some(value =>
+            typeof value === 'string' || value === 'uuid' || value === 'number' || typeof value === 'function' || (value && value.type)
+        );
+        schema = isExplicitSchema ? schemaOrSample : inferSchema(schemaOrSample);
+    } else {
+        schema = schemaOrSample
+    }
+
     const normalizedSchema = normalizeSchema(schema)
 
     return Array.from({ length: quantity }, () =>
@@ -85,6 +114,8 @@ export const factory = (schema, quantity = 1, cache = {}) => {
 }
 
 /**
+ * @deprecated Use factory() with isSample option instead. This function will be removed in the next major version.
+ *
  * Generates fake data based on a sample data object
  * @param {Object} sampleData - A sample data object to infer the schema from
  * @param {number} [quantity=1] - The number of data objects to generate
@@ -92,8 +123,8 @@ export const factory = (schema, quantity = 1, cache = {}) => {
  * @returns {Array<Object>} An array of generated data objects
  */
 export const factoryFromSample = (sampleData, quantity = 1, cache = {}) => {
-    const schema = inferSchema(sampleData)
-    return factory(schema, quantity, cache)
+    console.warn('Warning: factoryFromSample() is deprecated. Use factory() with isSample option instead.');
+    return factory(sampleData, { quantity, cache, isSample: true });
 }
 
 export { defineType, setSeed }

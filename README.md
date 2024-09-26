@@ -1,8 +1,21 @@
-![CI](https://github.com/asadhshujau/mock-factory/workflows/CI/badge.svg)
-
 # shujau-mock-factory
 
-A flexible and powerful fake data generator built on top of Faker.js.
+![CI](https://github.com/asadhshujau/mock-factory/workflows/CI/badge.svg)
+[![npm version](https://badge.fury.io/js/shujau-mock-factory.svg)](https://badge.fury.io/js/shujau-mock-factory)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+A flexible and powerful mock data generator built on top of Faker.js, designed to streamline the creation of realistic test data for your JavaScript applications.
+
+## Features
+
+- 🔧 Flexible schema definition
+- 🏗 Support for nested objects and arrays
+- 🎭 Custom generator functions
+- 🌈 Wide range of built-in data types
+- 🔢 Consistent data generation with seeding
+- 🧩 Custom type definitions
+- 🔍 Automatic schema inference from sample data
+- ⚙️ Backwards compatibility with previous API
 
 ## Installation
 
@@ -16,59 +29,44 @@ Using yarn:
 yarn add shujau-mock-factory
 ```
 
-## Usage
-
-Basic usage:
+## Quick Start
 
 ```javascript
 import factory from 'shujau-mock-factory';
 
-// Generate fake data
 const users = factory({
   id: 'uniqueInt',
   name: 'fullName',
   email: 'email',
   age: { type: 'number', options: { min: 18, max: 65 } }
-}, 2);
+}, { quantity: 2 });
 
 console.log(users);
 ```
 
-Advanced usage:
-```javascript
-import { factory, typeGenerators, resetUniqueIntCounter, setUniqueIntStart } from 'shujau-mock-factory';
+## API Reference
 
-// start uniqueInt count from 10
-setUniqueIntStart(10)
+### factory(schemaOrSample, options)
 
-// Use factory as before
-const users = factory({ ... }, 2);
+Generates mock data based on the provided schema or sample.
 
-// Reset unique integer counter
-resetUniqueIntCounter();
+- `schemaOrSample`: Object or Array defining the structure of the data to generate, or a sample object to infer the schema from.
+- `options`: Object (optional)
+  - `quantity`: Number of objects to generate (default: 1)
+  - `seed`: Seed for consistent random generation
+  - `isSample`: Boolean indicating if the first argument is a sample object (default: false)
+  - `cache`: Object for caching generator functions (advanced usage)
 
-// Access type generators directly
-const randomName = typeGenerators.fullName();
-```
+Returns an array of generated objects.
 
-## Features
+### Defining Schemas
 
-- Flexible schema definition
-- Supports nested objects and arrays
-- Custom generator functions
-- Built on Faker.js for a wide range of data types
-- Set a seed to generate consistent data across multiple runs
-- Custom type definitions
-- Schema inference
-
-## Schema Definition
-
-### Simple Array
+#### Simple Array
 ```javascript
 const schema = ['id', 'name', 'email'];
 ```
 
-### Object with Types
+#### Object with Types
 ```javascript
 const schema = {
   id: 'uuid',
@@ -77,7 +75,7 @@ const schema = {
 };
 ```
 
-### Complex Object
+#### Complex Object
 ```javascript
 const schema = {
   id: 'uniqueInt',
@@ -95,175 +93,91 @@ const schema = {
 };
 ```
 
-### Custom Generators
-```javascript
-const schema = {
-  id: 'uuid',
-  name: 'fullName',
-  customField: () => 'Custom Value'
-};
-```
+### Supported Types
 
-## API
-
-### factory(schema, quantity = 1)
-
-- `schema`: Object or Array defining the structure of the data to generate
-- `quantity`: Number of objects to generate (default: 1)
-
-Returns an array of generated objects based on the schema.
-
-## Supported Types
-
-- Basic: string, number, boolean
+- Basic: string, number, boolean, uuid
 - Person: firstName, lastName, fullName, gender, age
-- Contact: email, phone
+- Contact: email, phone, mobile
 - Internet: username, password, url, avatar
 - Address: address, street, city, state, country, zipCode, latitude, longitude
 - Company: company, companySuffix, jobTitle
 - Finance: creditCard, creditCardCVV, iban, bic, bitcoinAddress
-- Content: paragraph, sentence, word
-- Date/Time: past, future, recent, month, weekday
-- Identifiers: uuid
+- Content: paragraph, sentence, word, description
+- Date/Time: date, datetime, past, future, recent, month, weekday
+- Identifiers: uniqueInt
 - Miscellaneous: color
 
-## Seeding
+### Advanced Usage
 
-You can now set a seed to generate consistent data across multiple runs:
+#### Seeding for Consistent Data
 
 ```javascript
 import { factory, setSeed } from 'shujau-mock-factory';
 
-// Set a seed
 setSeed(123);
-
-// Generate data
-const users = factory({
-  id: 'uniqueInt',
-  name: 'fullName',
-  email: 'email'
-}, 2);
-
-// This will generate the same data every time with the same seed
-console.log(users);
+const users = factory({ name: 'fullName', email: 'email' }, { quantity: 2 });
 ```
 
-## Custom Type Definitions
-
-You can now define your own custom types using the `defineType` function:
+#### Custom Type Definitions
 
 ```javascript
 import { factory, defineType } from 'shujau-mock-factory';
 
-// Define a custom type
 defineType('customEmail', () => `user_${Math.random().toString(36).substr(2, 5)}@example.com`);
 
-// Use the custom type in a schema
 const users = factory({
   id: 'uniqueInt',
-  email: 'customEmail',
-  name: 'fullName'
-}, 2);
-
-console.log(users);
+  email: 'customEmail'
+}, { quantity: 2 });
 ```
 
-This allows you to create types specific to your use case or domain, enhancing the flexibility of the mock factory.
-
-## Schema Inference
-
-You can now generate mock data based on a sample of your actual data structure using the `factoryFromSample` function:
+#### Schema Inference from Sample Data
 
 ```javascript
-import { factoryFromSample } from 'shujau-mock-factory';
+import { factory } from 'shujau-mock-factory';
 
-const sampleData = {
+const sampleUser = {
   id: 1,
   name: "John Doe",
   email: "john@example.com",
-  age: 30,
-  isActive: true,
-  tags: ["user", "customer"],
-  address: {
-    street: "123 Main St",
-    city: "Anytown",
-    zipCode: "12345"
-  }
+  age: 30
 };
 
-const mockData = factoryFromSample(sampleData, 3);
-console.log(mockData);
+const users = factory(sampleUser, { quantity: 3, isSample: true });
 ```
 
-The `factoryFromSample` function will infer the schema from the sample data and generate appropriate mock data. It supports nested object structures, allowing you to create complex mock data easily.
-
-Example with dates:
+#### Unique Integer Management
 
 ```javascript
-import { factoryFromSample } from 'shujau-mock-factory';
+import { factory, setUniqueIntStart, resetUniqueIntCounter } from 'shujau-mock-factory';
 
-const sampleData = {
-  id: 1,
-  name: "John Doe",
-  birthDate: "1990-01-01",
-  createdAt: "2023-01-01T12:00:00Z",
-  lastLogin: new Date()
-};
+setUniqueIntStart(1000);
+const users = factory({ id: 'uniqueInt', name: 'fullName' }, { quantity: 2 });
 
-const mockData = factoryFromSample(sampleData, 3);
-console.log(mockData);
+resetUniqueIntCounter(); // Resets the counter to 0
 ```
 
-## Testing
+## Migrating from v1.x to v2.0
 
-This package uses Jest for testing. To run the tests:
+Version 2.0 introduces a new options object for the `factory` function, but maintains backwards compatibility:
 
-#### Install dependencies:
+```javascript
+// Old way (still supported)
+const oldWay = factory(schema, 2);
 
-```bash
-npm install
+// New way
+const newWay = factory(schema, { quantity: 2 });
+
+// Using sample data (previously factoryFromSample)
+const fromSample = factory(sampleData, { quantity: 2, isSample: true });
 ```
 
-or
+The `factoryFromSample` function is deprecated and will be removed in the next major version.
 
-```bash
-yarn
-```
+## Contributing
 
-#### Run tests:
-
-```bash
-npm test
-```
-
-or
-
-```bash
-yarn test
-```
-
-#### To run tests in watch mode:
-
-```bash
-npm run test:watch
-```
-**or**
-```bash
-yarn test:watch
-```
-
-The test suite covers various aspects of the shujau-mock-factory, including:
-- Simple array schemas
-- Object schemas with explicit types
-- Nested objects
-- Array generation
-- Custom generator functions
-- Multiple object generation
-- Custom type definitions
-- Schema Inference
-
-If you're contributing to this project, please ensure that your changes are covered by tests.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

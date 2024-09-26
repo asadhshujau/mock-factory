@@ -1,6 +1,6 @@
 {
   "name": "shujau-mock-factory",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "A flexible fake data generator based on Faker.js",
   "main": "src/index.js",
   "type": "module",
