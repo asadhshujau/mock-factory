@@ -6,13 +6,15 @@ import factory, { defineType, factoryFromSample, resetUniqueIntCounter, setSeed 
 
 describe('mock-factory', () => {
     test('generates data based on simple array schema', () => {
-        const schema = ['id', 'name', 'email']
+        const schema = ['id', 'name', 'email', 'somethingelse']
         const result = factory(schema, 1)
 
         expect(result).toHaveLength(1)
         expect(result[0]).toHaveProperty('id')
         expect(result[0]).toHaveProperty('name')
         expect(result[0]).toHaveProperty('email')
+        expect(result[0]).toHaveProperty('somethingelse')
+        expect(typeof result[0].somethingelse).toBe('string')
     })
 
     test('generates data based on object schema with explicit types', () => {
@@ -27,6 +29,26 @@ describe('mock-factory', () => {
         expect(result).toHaveLength(1)
         expect(result[0]).toHaveProperty('id')
         expect(result[0].id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i)
+        expect(result[0]).toHaveProperty('name')
+        expect(typeof result[0].name).toBe('string')
+        expect(result[0]).toHaveProperty('email')
+        expect(result[0].email).toMatch(/@/)
+        expect(result[0]).toHaveProperty('age')
+        expect(typeof result[0].age).toBe('number')
+    })
+
+    test('generates data based on sample object', () => {
+        const sampleData = {
+            id: 1,
+            name: "John Doe",
+            email: "john@example.com",
+            age: 30
+        }
+        const result = factory(sampleData, { isSample: true, quantity: 1 })
+
+        expect(result).toHaveLength(1)
+        expect(result[0]).toHaveProperty('id')
+        expect(typeof result[0].id).toBe('number')
         expect(result[0]).toHaveProperty('name')
         expect(typeof result[0].name).toBe('string')
         expect(result[0]).toHaveProperty('email')
@@ -91,6 +113,30 @@ describe('mock-factory', () => {
             expect(item).toHaveProperty('name')
         })
     })
+
+    test('supports old API with number as second argument', () => {
+        const schema = { id: 'uniqueInt', name: 'fullName' };
+        const result = factory(schema, 3);
+
+        expect(result).toHaveLength(3);
+        result.forEach(item => {
+            expect(item).toHaveProperty('id');
+            expect(item).toHaveProperty('name');
+        });
+    });
+
+    test('new API and old API produce same results', () => {
+        const schema = { id: 'uniqueInt', name: 'fullName' };
+        const seed = 123;
+
+        setSeed(seed);
+        const resultOld = factory(schema, 2);
+
+        setSeed(seed);
+        const resultNew = factory(schema, { quantity: 2 });
+
+        expect(resultOld).toEqual(resultNew);
+    });
 
     describe('uniqueInt generator', () => {
         beforeEach(() => {
