@@ -44,6 +44,22 @@ const users = factory({
 console.log(users);
 ```
 
+## Usage Tips
+
+### Obtaining a Single Object
+
+The `factory` function always returns an array, even when generating a single item. If you need a single object, you can easily extract it using array destructuring or indexing:
+
+```javascript
+// Using array destructuring
+const [user] = factory({ name: 'fullName', email: 'email' });
+
+// Or using array indexing
+const user = factory({ name: 'fullName', email: 'email' })[0];
+```
+
+This design ensures consistency and flexibility in the API, allowing you to always work with the result in the same way, regardless of the quantity generated.
+
 ## API Reference
 
 ### factory(schemaOrSample, options)
@@ -111,12 +127,31 @@ const schema = {
 
 #### Seeding for Consistent Data
 
+You can set a seed to generate consistent data across multiple runs. This can be done in two ways:
+
+1. Using the `setSeed` function:
+
 ```javascript
 import { factory, setSeed } from 'shujau-mock-factory';
 
 setSeed(123);
 const users = factory({ name: 'fullName', email: 'email' }, { quantity: 2 });
 ```
+
+2. Using the `seed` option in the `factory` function (recommended):
+
+```javascript
+import { factory } from 'shujau-mock-factory';
+
+const users = factory(
+  { name: 'fullName', email: 'email' },
+  { quantity: 2, seed: 123 }
+);
+
+// This will generate the same data as the previous example
+```
+
+Using the `seed` option is recommended as it allows for more localized control over seeding, especially when you need different seeds for different factory calls in the same script.
 
 #### Custom Type Definitions
 
