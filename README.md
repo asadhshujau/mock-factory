@@ -80,7 +80,10 @@ Returns an array of generated objects.
 #### Simple Array
 ```javascript
 const schema = ['id', 'name', 'email'];
+const users = factory(schema, { quantity: 2 });
 ```
+
+This above schema will generate objects with 'id', 'name', and 'email' properties, each using the default generator for its field name. Note that the `isSample` option should not be used when using an array as the schema.
 
 #### Object with Types
 ```javascript

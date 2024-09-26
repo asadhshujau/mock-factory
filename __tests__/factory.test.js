@@ -17,6 +17,30 @@ describe('mock-factory', () => {
         expect(typeof result[0].somethingelse).toBe('string')
     })
 
+    test('generates data based on array schema without isSample flag', () => {
+        const schema = ['id', 'name', 'email']
+        const result = factory(schema, { quantity: 2 })
+
+        expect(result).toHaveLength(2)
+        result.forEach(item => {
+            expect(item).toHaveProperty('id')
+            expect(item).toHaveProperty('name')
+            expect(item).toHaveProperty('email')
+        })
+    })
+
+    test('generates data based on array schema', () => {
+        const schema = ['id', 'name', 'email']
+        const result = factory(schema, { quantity: 2 })
+
+        expect(result).toHaveLength(2)
+        result.forEach(item => {
+            expect(item).toHaveProperty('id')
+            expect(item).toHaveProperty('name')
+            expect(item).toHaveProperty('email')
+        })
+    })
+
     test('generates data based on object schema with explicit types', () => {
         const schema = {
             id: 'uuid',
@@ -115,28 +139,28 @@ describe('mock-factory', () => {
     })
 
     test('supports old API with number as second argument', () => {
-        const schema = { id: 'uniqueInt', name: 'fullName' };
-        const result = factory(schema, 3);
+        const schema = { id: 'uniqueInt', name: 'fullName' }
+        const result = factory(schema, 3)
 
-        expect(result).toHaveLength(3);
+        expect(result).toHaveLength(3)
         result.forEach(item => {
-            expect(item).toHaveProperty('id');
-            expect(item).toHaveProperty('name');
-        });
-    });
+            expect(item).toHaveProperty('id')
+            expect(item).toHaveProperty('name')
+        })
+    })
 
     test('new API and old API produce same results', () => {
-        const schema = { id: 'uniqueInt', name: 'fullName' };
-        const seed = 123;
+        const schema = { id: 'uniqueInt', name: 'fullName' }
+        const seed = 123
 
-        setSeed(seed);
-        const resultOld = factory(schema, 2);
+        setSeed(seed)
+        const resultOld = factory(schema, 2)
 
-        setSeed(seed);
-        const resultNew = factory(schema, { quantity: 2 });
+        setSeed(seed)
+        const resultNew = factory(schema, { quantity: 2 })
 
-        expect(resultOld).toEqual(resultNew);
-    });
+        expect(resultOld).toEqual(resultNew)
+    })
 
     describe('uniqueInt generator', () => {
         beforeEach(() => {

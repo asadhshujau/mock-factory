@@ -84,6 +84,10 @@ export const factory = (schemaOrSample, options = {}) => {
         isSample = false
     } = options
 
+    if (Array.isArray(schemaOrSample) && isSample) {
+        console.warn('Warning: isSample option is ignored for array schemas. Arrays are always treated as explicit schemas.');
+    }
+
     if (seed !== undefined) {
         setSeed(seed)
     }
